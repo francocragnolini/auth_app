@@ -15,7 +15,13 @@ class GoogleSignInService {
 
       print(account);
 
-      //TODO: id token
+      //TODO: id token: autenticar contra nuestro backend
+      final googleKey = await account?.authentication;
+      print("=======ID TOKEN======");
+      print(googleKey!.idToken);
+
+      //TODO: llamar un servicio rest a nuestro backend
+      //con el idToken
 
       return account;
     } catch (e) {
