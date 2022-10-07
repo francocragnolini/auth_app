@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 class GoogleSignInService {
   //metodo
@@ -17,11 +20,22 @@ class GoogleSignInService {
 
       //TODO: id token: autenticar contra nuestro backend
       final googleKey = await account?.authentication;
-      print("=======ID TOKEN======");
-      print(googleKey!.idToken);
+      //print("=======ID TOKEN======");
+      //print(googleKey!.idToken);
 
       //TODO: llamar un servicio rest a nuestro backend
       //con el idToken
+      final signInWithGoogleEndpoint = Uri(
+        scheme: "https",
+        host: 'google-signin-flutter-backend.herokuapp.com',
+        path: '/auth/google',
+      );
+
+      final session = await http
+          .post(signInWithGoogleEndpoint, body: {"token": googleKey!.idToken});
+
+      print("======= backend =========");
+      print(session.body);
 
       return account;
     } catch (e) {
